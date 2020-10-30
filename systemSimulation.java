@@ -8,15 +8,12 @@
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileInputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 public class systemSimulation{
   /* GLOBAL VARIABLES */
-  public static LinkedList<process> processInput = new LinkedList<process>(); // List of processes saved as a LinkedList because we do not know the maximum number of processes
+  public static ArrayList<process> processInput = new ArrayList<process>(); // List of processes saved as a LinkedList because we do not know the maximum number of processes
   private static int l2Quant;
   private static int l3Quant;
-
-  public systemSimulation(){
-  }
 
   /*
   * input
@@ -32,31 +29,37 @@ public class systemSimulation{
       int count = 0;                    // Keeps track of position in the input file, as they are all organized the same way
       int tempInt;
       while(reader.hasNext()){
-        if (count > 1){                 // Records the burst length/blocked time and checks if the process has ended
+        if (count > 2){                 // Records the burst length/blocked time and checks if the process has ended
           tempInt = reader.nextInt();
-          if(tempInt != -1){
-            current.burst[count - 2] = tempInt;
-          } else {
+          if(tempInt != -1)
+            current.burst[count - 3] = tempInt;
+          else {
             count = -1;
             processInput.add(current);
             current = new process();
           }
-        } else if(count == 1)           // Records the priority
+        } else if(count == 2)           // Records the arrival time of the process
+          current.arrival = reader.nextInt();
+        else if(count == 1)             // Records the priority
           current.priority = reader.next();
         else if(count == 0)             // Records the ID
           current.id = reader.next().charAt(0);
         count ++;
       }
+      for(int i = 0; i < processInput.size(); i++){
+        System.out.println(processInput.get(i));
+      }
     }
     catch(Exception e){
-      System.out.println("ERROR: Input a proper file");
+      System.out.println("Error: Input a proper file");
     }
   }
-  public static void main(String[] args){
 
+  /* TEMP MAIN */
+  public static void main(String[] args){
     // first check to see if the program was run with the command line argument
     if(args.length < 1) {
-      System.out.println("Error, usage: java ClassName inputfile");
+      System.out.println("Error: java ClassName inputfile");
       System.exit(1);
     } else {
       input(args[0]);
