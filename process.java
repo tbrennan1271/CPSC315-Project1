@@ -10,6 +10,9 @@ public class process{
   public String priority;
   public int arrival;
   public int[] burst;
+  public int l2Quant;
+  public int l3Quant;
+
   public process(){
     id = ' ';
     priority = "";
@@ -22,7 +25,7 @@ public class process{
       highPriority processHP = new highPriority(id, arrival, burst);
     }
     else if (priority == "L"){
-      lowPriority processLP = new lowPriority(id, arrival, burst);
+      lowPriority processLP = new lowPriority(id, arrival, burst, l2Quant, l3Quant);
     }
     
   }

@@ -9,6 +9,8 @@ import java.io.File;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.*;
+
 public class systemSimulation{
   /* GLOBAL VARIABLES */
   public static ArrayList<process> processInput = new ArrayList<process>(); // List of processes saved as a LinkedList because we do not know the maximum number of processes
