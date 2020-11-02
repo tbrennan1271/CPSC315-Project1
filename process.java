@@ -1,7 +1,7 @@
 /*
 * code that will maintain a single process
 *
-* @author Gabby Rodgers
+* @author Gabby Rogers
 * @author Tyler Brennan
 */
 
@@ -15,6 +15,16 @@ public class process{
     priority = "";
     arrival = 0;
     burst = new int[10];      // There will only ever be a maximum of 10 bursts
+  }
+
+  public void addProcess(){
+    if (priority == "H"){
+      highPriority processHP = new highPriority(id, arrival, burst);
+    }
+    else if (priority == "L"){
+      lowPriority processLP = new lowPriority(id, arrival, burst);
+    }
+    
   }
   public String toString(){
     String res = "";
