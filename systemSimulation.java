@@ -13,7 +13,7 @@ import java.util.*;
 public class systemSimulation{
     /* GLOBAL VARIABLES */
     public static ArrayList<process> processInput = new ArrayList<process>(); // List of processes saved as a LinkedList because we do not know the maximum number of processes
-    public static lowPriority low;
+    public static priority low;
     private static int l2Quant;
     private static int l3Quant;
 
@@ -26,7 +26,7 @@ public class systemSimulation{
         try{
             Scanner reader = new Scanner(new FileInputStream(file));
             process current = new process();  // Creates new processes to append to processInput
-            low = new lowPriority(reader.nextInt(), reader.nextInt());  // Set quantums for each low priority queue
+            low = new priority(reader.nextInt(), reader.nextInt());  // Set quantums for each low priority queue
             /*l2Quant = reader.nextInt();       // The quantums for each low priority queue are always found at the start of the input file
             l3Quant = reader.nextInt();*/
             int count = 0;                    // Keeps track of position in the input file, as they are all organized the same way
@@ -53,6 +53,15 @@ public class systemSimulation{
         catch(Exception e){
             System.out.println("Error: Input a proper file");
         }
+    }
+
+    public int checkNewJobs(int currentClockTick, ArrayList<process> processInput){
+        for (int i = 0; i < processInput.size(); i++){
+            if (processInput.get(i).arrival == currentClockTick){
+                return i;
+            }
+        }
+        return -1;
     }
 
     /* TEMP MAIN */
@@ -87,7 +96,7 @@ public class systemSimulation{
 
         System.out.println(low);
         for(clock = 0; clock < CLOCK_MAX; clock++){
-
+            
         }
     }
 }

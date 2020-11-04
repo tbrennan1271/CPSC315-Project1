@@ -13,7 +13,7 @@ public class process{
     public int index;   // Hopefully temp var to maintain burst index
     public int l2Quant;
     public int l3Quant;
-    public int blockCount;
+    public int numOfPreemptions;
 
     /*
     * process
@@ -24,18 +24,9 @@ public class process{
         priority = "";
         arrival = 0;
         burst = new int[10];      // There will only ever be a maximum of 10 bursts
-        blockCount = 0;
+        numOfPreemptions = 0;
     }
 
-    public void addProcess(){
-        if (priority == "H"){
-            highPriority processHP = new highPriority(id, arrival, burst);
-        }
-        else if (priority == "L"){
-            lowPriority processLP = new lowPriority(/*id, arrival, burst, */l2Quant, l3Quant);
-        }
-
-    }
 
     /*
     * toString

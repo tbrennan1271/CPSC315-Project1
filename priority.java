@@ -8,14 +8,14 @@
 
 import java.util.*;
 
-public class lowPriority {
+public class priority{
     /* GLOBAL VARIABLES */
     private Deque<process> H;
     private Deque<process> L2;
     private Deque<process> L3;
-    private Deque<process> blocked;     // Potentially shouldn't be here (or be a dequeue)
+    private Map<Integer, process> blocked = new HashMap<Integer, process>();   
 
-    public final int NUM_PREEMPT = 3;
+    public final int MAX_PREEMPTIONS = 3;
     public int L2Quant;
     public int L3Quant;
 
@@ -23,11 +23,10 @@ public class lowPriority {
     * lowPriority
     * Initializes the global variables and the priority queues to be used
     */
-    public lowPriority(int L2Quant, int L3Quant){
+    public priority(int L2Quant, int L3Quant){
         H = new LinkedList<>();
         L2 = new LinkedList<>();
         L3 = new LinkedList<>();
-        blocked = new LinkedList<>();
         this.L2Quant = L2Quant;
         this.L3Quant = L3Quant;
     }
@@ -41,11 +40,22 @@ public class lowPriority {
     public void readyProcess(process p){
         if(p.priority.equals("HP")){
             H.addLast(p);
-        } else if(p.blockCount <= NUM_PREEMPT){
+        } else if(p.numOfPreemptions <= MAX_PREEMPTIONS){
             L2.addLast(p);
-        } else{
+        } else if (p.numOfPreemptions > MAX_PREEMPTIONS) {
             L3.addLast(p);
+        } 
+    }
+
+    public process pickProcess(){
+        if (H.isEmpty() == false){
+            return H.removeFirst();
+        } else if (L2.isEmpty() == false){
+            return L2.removeFirst();
+        } else if (L3.isEmpty() == false){
+            return L3.removeFirst();
         }
+        return null;
     }
 
     /*
@@ -55,10 +65,10 @@ public class lowPriority {
     * @param int clock: Overall clock time of the system to check if job should be unblocked
     */
     public void unblocked(int clock){
-        process p = blocked.getFirst();
+        process p = blocked.get(clock);
         if(clock == p.burst[p.index] + p.arrival){
-            p.blockCount++;
-            readyProcess(blocked.removeFirst());
+            p.numOfPreemptions++;
+            readyProcess(blocked.remove(clock));
         }
     }
 
