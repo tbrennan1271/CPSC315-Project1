@@ -6,41 +6,55 @@
 */
 
 public class process{
-  public char id;
-  public String priority;
-  public int arrival;
-  public int[] burst;
-  public int l2Quant;
-  public int l3Quant;
+    public char id;
+    public String priority;
+    public int arrival;
+    public int[] burst;
+    public int index;   // Hopefully temp var to maintain burst index
+    public int l2Quant;
+    public int l3Quant;
+    public int blockCount;
 
-  public process(){
-    id = ' ';
-    priority = "";
-    arrival = 0;
-    burst = new int[10];      // There will only ever be a maximum of 10 bursts
-  }
+    /*
+    * process
+    * Initializes the global variables and the priority queues to be used
+    */
+    public process(){
+        id = ' ';
+        priority = "";
+        arrival = 0;
+        burst = new int[10];      // There will only ever be a maximum of 10 bursts
+        blockCount = 0;
+    }
 
-  public void addProcess(){
-    if (priority == "H"){
-      highPriority processHP = new highPriority(id, arrival, burst);
+    public void addProcess(){
+        if (priority == "H"){
+            highPriority processHP = new highPriority(id, arrival, burst);
+        }
+        else if (priority == "L"){
+            lowPriority processLP = new lowPriority(/*id, arrival, burst, */l2Quant, l3Quant);
+        }
+
     }
-    else if (priority == "L"){
-      lowPriority processLP = new lowPriority(id, arrival, burst, l2Quant, l3Quant);
+
+    /*
+    * toString
+    * Prints the contents of each priority queue
+    *
+    * @return String: String of the priority queues and their contents
+    */
+    public String toString(){
+        String res = "";
+        res += "ID: " + id;
+        res += "\nPriority: " + priority;
+        res += "\nArrival time: " + arrival;
+        for(int i = 0; i < burst.length; i++){
+            if(i%2 == 0){
+              res += "\nBurst: " + burst[i];
+            } else{
+              res += "\nBlock: " + burst[i];
+            }
+        }
+        return res + "\n";
     }
-    
-  }
-  public String toString(){
-    String res = "";
-    res += "ID: " + id;
-    res += "\nPriority: " + priority;
-    res += "\nArrival time: " + arrival;
-    for(int i = 0; i < burst.length; i++){
-      if(i%2 == 0){
-        res += "\nBurst: " + burst[i];
-      } else{
-        res += "\nBlock: " + burst[i];
-      }
-    }
-    return res + "\n";
-  }
 }
