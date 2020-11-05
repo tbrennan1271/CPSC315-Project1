@@ -1,5 +1,5 @@
 /*
-* lowPriority
+* priority
 * Used to maintain the priority queues
 *
 * @author Gabby Rogers
@@ -10,23 +10,25 @@ import java.util.*;
 
 public class priority{
     /* GLOBAL VARIABLES */
+    public final int MAX_PREEMPTIONS = 3;
+
     private Deque<process> H;
     private Deque<process> L2;
     private Deque<process> L3;
-    private Map<Integer, process> blocked = new HashMap<Integer, process>();   
+    private Map<Integer, process> blocked;
 
-    public final int MAX_PREEMPTIONS = 3;
     public int L2Quant;
     public int L3Quant;
 
     /*
-    * lowPriority
+    * priority
     * Initializes the global variables and the priority queues to be used
     */
     public priority(int L2Quant, int L3Quant){
         H = new LinkedList<>();
         L2 = new LinkedList<>();
         L3 = new LinkedList<>();
+        blocked = new HashMap<Integer, process>();
         this.L2Quant = L2Quant;
         this.L3Quant = L3Quant;
     }
@@ -44,7 +46,7 @@ public class priority{
             L2.addLast(p);
         } else if (p.numOfPreemptions > MAX_PREEMPTIONS) {
             L3.addLast(p);
-        } 
+        }
     }
 
     public process pickProcess(){

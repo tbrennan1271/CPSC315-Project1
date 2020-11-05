@@ -11,19 +11,18 @@ public class process{
     public int arrival;
     public int[] burst;
     public int index;   // Hopefully temp var to maintain burst index
-    public int l2Quant;
-    public int l3Quant;
     public int numOfPreemptions;
 
     /*
     * process
     * Initializes the global variables and the priority queues to be used
     */
-    public process(){
-        id = ' ';
-        priority = "";
-        arrival = 0;
-        burst = new int[10];      // There will only ever be a maximum of 10 bursts
+    public process(char id, String priority, int arrival, int[] burst){
+        this.id = id;
+        this.priority = priority;
+        this.arrival = arrival;
+        this.burst = burst;      // There will only ever be a maximum of 10 bursts
+        index = 0;
         numOfPreemptions = 0;
     }
 
