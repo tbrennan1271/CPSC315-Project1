@@ -1,5 +1,5 @@
 /*
-* main
+* main.java
 * Maintains and runs all the necessary code
 *
 * @author Gabby Rogers
@@ -14,8 +14,9 @@ public class main{
         final int CLOCK_MAX = 80;
 
         ArrayList<process> processInput = new ArrayList<>();
-        priority readyQueues = new priority(0, 0);
+        priority readyQueues = new priority();
         readInput input = new readInput();
+        CPU cpu;
         int clock;
 
         // first check to see if the program was run with the command line argument
@@ -23,14 +24,22 @@ public class main{
             System.out.println("Error: java ClassName inputfile");
             System.exit(1);
         } else {
-            readyQueues = input.readFile(args[0], processInput);
+            cpu = input.readFile(args[0], processInput);
         }
 
 
-
+        /*
         for(int i = 0; i < processInput.size(); i++){
             System.out.println(processInput.get(i));
-        }
+        }*/
+
+
+        /*
+        for(int i = 0; i < processInput.size(); i++){
+            readyQueues.readyProcess(processInput.get(i));
+        }*/
+
+
 
         /*
         Loop
@@ -41,13 +50,14 @@ public class main{
             Quantum_check;		    // check if current running job’s quantum expired
             Cpu_check;			    // check if CPU idle and if so pick job to run
         */
-        for(int i = 0; i < processInput.size(); i++){
-            readyQueues.readyProcess(processInput.get(i));
-        }
 
-        System.out.println(readyQueues);
+        //System.out.println(readyQueues);
+        int index;
         for(clock = 0; clock < CLOCK_MAX; clock++){
-
+            System.out.println(clock);
+            index = input.checkNewJobs(clock, processInput);
+            if(index >= 0)
+                System.out.println(processInput.get(index));
         }
     }
 }

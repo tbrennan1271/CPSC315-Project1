@@ -1,5 +1,5 @@
 /*
-* readInput
+* readInput.java
 * Used to read in input and to hold the main code
 *
 * @author Gabby Rogers
@@ -12,15 +12,19 @@ import java.util.*;
 
 public class readInput{
     private static final int BURST_LEN = 10;
+
     /*
     * readFile
     * Input code parses the input file and breaks it into the corresponding sections of different processes
     *
-    * @param file - The file name pulled from the command line (file should be saved in the same folder as the code)
+    * @param String file: The file name pulled from the command line (file should be saved in the same folder as the code)
+    * @param ArrayList<process> processInput: ArrayList to store all the incoming processes
+    * @return priority: The priority queues with all of the quantums set in place or null if there is an issue reading the file
     */
-    public static priority readFile(String file, ArrayList<process> processInput){
+    public static CPU readFile(String file, ArrayList<process> processInput){
         /* VARIABLES */
-        priority readyQueues;
+        //priority readyQueues;
+        CPU cpu;
         Scanner reader;
         process current;    // Creates new processes to append to processInput
         int l2Quant;
@@ -42,7 +46,8 @@ public class readInput{
 
             l2Quant = reader.nextInt();
             l3Quant = reader.nextInt();
-            readyQueues = new priority(l2Quant, l3Quant);  // Set quantums for each low priority queue
+            //readyQueues = new priority(l2Quant, l3Quant);  // Set quantums for each low priority queue
+            cpu = new CPU(l2Quant, l3Quant);    // Set quantums for each low priority queue
             while(reader.hasNext()){
                 if (count > 2){                 // Records the burst length/blocked time and checks if the process has ended
                     tempInt = reader.nextInt();
@@ -62,7 +67,8 @@ public class readInput{
                     id = reader.next().charAt(0);
                 count ++;
             }
-            return readyQueues;
+            //return readyQueues;
+            return cpu;
         }
         catch(Exception e){
             System.out.println("Error: Input a proper file");
@@ -70,6 +76,14 @@ public class readInput{
         }
     }
 
+    /*
+    * checkNewJobs
+    * Input code parses the input file and breaks it into the corresponding sections of different processes
+    *
+    * @param int currentClockTick: Current clock time to be compared to the arrival times in the ArrayList
+    * @param ArrayList<process> processInput: ArrayList that stores all the incoming processes
+    * @return int: Index of the proces that is entering the system at the specified time or -1 of ther is none
+    */
     public int checkNewJobs(int currentClockTick, ArrayList<process> processInput){
         for (int i = 0; i < processInput.size(); i++){
             if (processInput.get(i).arrival == currentClockTick){

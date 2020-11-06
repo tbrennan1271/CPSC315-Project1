@@ -1,5 +1,5 @@
 /*
-* priority
+* priority.java
 * Used to maintain the priority queues
 *
 * @author Gabby Rogers
@@ -17,20 +17,20 @@ public class priority{
     private Deque<process> L3;
     private Map<Integer, process> blocked;
 
-    public int L2Quant;
-    public int L3Quant;
-
     /*
     * priority
     * Initializes the global variables and the priority queues to be used
+    *
+    * @param int l2Quant: The quantum of the higher low priority queue
+    * @param int l3Quant: The quantum of the lowest priority queue
     */
-    public priority(int L2Quant, int L3Quant){
+    public priority(){//int L2Quant, int L3Quant){
         H = new LinkedList<>();
         L2 = new LinkedList<>();
         L3 = new LinkedList<>();
         blocked = new HashMap<Integer, process>();
-        this.L2Quant = L2Quant;
-        this.L3Quant = L3Quant;
+        //this.L2Quant = L2Quant;
+        //this.L3Quant = L3Quant;
     }
 
     /*
@@ -49,6 +49,12 @@ public class priority{
         }
     }
 
+    /*
+    * pickProcess
+    * Takes processes as input and returns them to be run on the CPU
+    *
+    * @return process: The process to be run on the CPU or null if there are no processes available
+    */
     public process pickProcess(){
         if (H.isEmpty() == false){
             return H.removeFirst();

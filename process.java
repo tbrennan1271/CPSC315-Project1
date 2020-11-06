@@ -1,4 +1,5 @@
 /*
+* process.java
 * code that will maintain a single process
 *
 * @author Gabby Rogers
@@ -16,6 +17,11 @@ public class process{
     /*
     * process
     * Initializes the global variables and the priority queues to be used
+    * 
+    * @param char id: The single character id
+    * @param String priority: Either HP or LP
+    * @param int arrival: Initial arrival time of the process
+    * @param int[] burst: Array storing the burst lengths and blocked lengths (alternating)
     */
     public process(char id, String priority, int arrival, int[] burst){
         this.id = id;
