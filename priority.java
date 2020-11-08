@@ -40,11 +40,12 @@ public class priority{
     * @param process p: The process to be assigned to a priority queue
     */
     public void readyProcess(process p){
-        if(p.priority.equals("HP")){
+
+        if(p.priority.equals("HP") && p != null){
             H.addLast(p);
-        } else if(p.numOfPreemptions <= MAX_PREEMPTIONS){
+        } else if(p.numOfPreemptions <= MAX_PREEMPTIONS && p != null){
             L2.addLast(p);
-        } else if (p.numOfPreemptions > MAX_PREEMPTIONS) {
+        } else if (p.numOfPreemptions > MAX_PREEMPTIONS && p != null) {
             L3.addLast(p);
         }
     }

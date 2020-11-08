@@ -11,7 +11,7 @@ public class CPU{
     private final int GANTT_LENGTH = 80;
     public final int MAX_PREEMPTIONS = 3;
     private char[] gantt;
-    private process running;
+    public process running;
     private int endTime;
 
     public int l2Quant;
@@ -24,7 +24,7 @@ public class CPU{
     public CPU(int l2Quant, int l3Quant){
         gantt = new char[GANTT_LENGTH];
         running = null;
-        endTime = 0;
+        endTime = -1;
         this.l2Quant = l2Quant;
         this.l3Quant = l3Quant;
 
@@ -51,16 +51,13 @@ public class CPU{
     *       still running/there is no currently running process
     */
     public process cpuJobDoneCheck(int clock){
-        process tempProc;
+        process tempProc = null;
         if(clock == endTime && running != null){
-            endTime = 0;
+            endTime = -1;
             tempProc = running;
-            endTime = 0;
             running = null;
-            return tempProc;
-        } else{
-            return null;
         }
+        return tempProc;
     }
 
     /*
@@ -83,7 +80,7 @@ public class CPU{
             if(running.burst[running.index] + quantum == clock && quantum != 0){
                 running.numOfPreemptions++;
                 tempProc = running;
-                endTime = 0;
+                endTime = -1;
                 running = null;
                 return tempProc;
             } else{
@@ -101,7 +98,7 @@ public class CPU{
     * @return boolean: True if there is no running process and false if there is
     */
     public boolean isIdle(){
-        if(running != null)
+        if(running == null)
             return true;
         else
             return false;

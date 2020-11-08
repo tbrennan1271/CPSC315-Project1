@@ -16,7 +16,7 @@ public class main{
         ArrayList<process> processInput = new ArrayList<>();
         priority readyQueues = new priority();
         readInput input = new readInput();
-        CPU cpu;
+        CPU cpu = new CPU(0, 0);
         int clock;
 
         // first check to see if the program was run with the command line argument
@@ -53,11 +53,30 @@ public class main{
 
         //System.out.println(readyQueues);
         int index;
+        process current;
         for(clock = 0; clock < CLOCK_MAX; clock++){
+            current = null;
             System.out.println(clock);
             index = input.checkNewJobs(clock, processInput);
-            if(index >= 0)
-                System.out.println(processInput.get(index));
+            if(index >= 0){
+                //System.out.println(processInput.get(index));
+                readyQueues.readyProcess(processInput.get(index));
+                //System.out.println(readyQueues);
+            }
+            current = cpu.cpuJobDoneCheck(clock);
+            if(current != null && current.burst[current.index] != 0){
+                readyQueues.readyProcess(current);
+            }
+            if(cpu.isIdle()){
+                current = readyQueues.pickProcess();
+                if(current != null){
+                    System.out.println("IDLE");
+
+                    cpu.runProcess(current, clock);
+                }
+            }
+            System.out.println(cpu.running);
+            System.out.println();
         }
     }
 }
