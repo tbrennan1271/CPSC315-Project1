@@ -67,6 +67,12 @@ public class main{
             if(current != null && current.burst[current.index] != 0){
                 readyQueues.readyProcess(current);
             }
+
+            current = cpu.quantumCheck(clock);
+            if(current != null){
+                readyQueues.readyProcess(current);
+            }
+
             if(cpu.isIdle()){
                 current = readyQueues.pickProcess();
                 if(current != null){

@@ -13,6 +13,7 @@ public class CPU{
     private char[] gantt;
     public process running;
     private int endTime;
+    private int startTime;
 
     public int l2Quant;
     public int l3Quant;
@@ -25,6 +26,7 @@ public class CPU{
         gantt = new char[GANTT_LENGTH];
         running = null;
         endTime = -1;
+        startTime = -1;
         this.l2Quant = l2Quant;
         this.l3Quant = l3Quant;
 
@@ -39,7 +41,8 @@ public class CPU{
     */
     public void runProcess(process p, int clock){
         running = p;
-        endTime = p.burst[p.index++] + clock;
+        endTime = p.burst[p.index] + clock;
+        startTime = clock;
     }
 
     /*
@@ -54,7 +57,9 @@ public class CPU{
         process tempProc = null;
         if(clock == endTime && running != null){
             endTime = -1;
+            startTime = -1;
             tempProc = running;
+            tempProc.index++;
             running = null;
         }
         return tempProc;
@@ -69,26 +74,26 @@ public class CPU{
     *       still running/there is no currently running process
     */
     public process quantumCheck(int clock){
-        process tempProc;
+        process tempProc = null;
         int quantum = 0;
         if(running != null){
-            if(running.priority == "LP" && running.numOfPreemptions <= MAX_PREEMPTIONS){
+            if(running.priority.equals("LP") && running.numOfPreemptions <= MAX_PREEMPTIONS){
                 quantum = l2Quant;
-            } else if(running.priority == "LP" && running.numOfPreemptions > MAX_PREEMPTIONS){
+            } else if(running.priority.equals("LP") && running.numOfPreemptions > MAX_PREEMPTIONS){
                 quantum = l3Quant;
             }
-            if(running.burst[running.index] + quantum == clock && quantum != 0){
+            if(quantum + startTime == clock && quantum != 0){
+                System.out.print("----- ");
+                System.out.print(running.id);
+                System.out.println(" USED ENTIRE QUANTUM -----");
                 running.numOfPreemptions++;
                 tempProc = running;
+                tempProc.burst[tempProc.index] -= quantum;
                 endTime = -1;
                 running = null;
-                return tempProc;
-            } else{
-                return null;
             }
-        } else{
-            return null;
         }
+        return tempProc;
     }
 
     /*
