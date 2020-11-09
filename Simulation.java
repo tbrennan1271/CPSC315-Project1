@@ -14,9 +14,9 @@ public class Simulation{
         final int CLOCK_MAX = 80;
 
         ArrayList<process> processInput = new ArrayList<>();
-        priority readyQueues = new priority();
+        Priority readyQueues = new Priority();
         readInput input = new readInput();
-        blocked blockedProc = new blocked();
+        Blocked blockedProc = new Blocked();
         CPU cpu = new CPU(0, 0);
         int clock;
 

@@ -7,12 +7,12 @@ import java.util.*;
 * @author Tyler Brennan
 */
 
-public class blocked {
+public class Blocked {
     private Map<Integer, process> blocked;      // blocked processes and their blocked time
 
-    priority tempPriority = new priority();
+    Priority tempPriority = new Priority();
 
-    public blocked(){
+    public Blocked(){
         blocked = new HashMap<Integer, process>();
     }
 

@@ -8,7 +8,7 @@
 
 import java.util.*;
 
-public class priority{
+public class Priority{
     /* GLOBAL VARIABLES */
     public final int MAX_PREEMPTIONS = 3;
 
@@ -20,7 +20,7 @@ public class priority{
     * priority
     * Initializes the global variables and the priority queues to be used
     */
-    public priority(){
+    public Priority(){
         H = new LinkedList<>();
         L2 = new LinkedList<>();
         L3 = new LinkedList<>();

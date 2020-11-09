@@ -18,7 +18,7 @@ public class CPU{
     public int l2Quant;
     public int l3Quant;
 
-    blocked blockedProc = new blocked();
+    Blocked blockedProc = new Blocked();
 
     /*
     * CPU
