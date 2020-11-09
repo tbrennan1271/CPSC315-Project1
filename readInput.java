@@ -6,7 +6,7 @@
 * @author Tyler Brennan
 */
 
-import java.io.File;
+//import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
 
@@ -21,7 +21,7 @@ public class readInput{
     * @param ArrayList<process> processInput: ArrayList to store all the incoming processes
     * @return priority: The priority queues with all of the quantums set in place or null if there is an issue reading the file
     */
-    public static CPU readFile(String file, ArrayList<process> processInput){
+    public CPU readFile(String file, ArrayList<process> processInput){
         /* VARIABLES */
         //priority readyQueues;
         CPU cpu;

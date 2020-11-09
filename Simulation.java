@@ -8,7 +8,7 @@
 
 import java.util.*;
 
-public class main{
+public class Simulation{
     public static void main(String[] args){
         /* VARIABLES */
         final int CLOCK_MAX = 80;

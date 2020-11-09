@@ -7,7 +7,7 @@
 */
 
 public class CPU{
-    private final int BURST_LEN = 10;
+    //private final int BURST_LEN = 10;
     private final int GANTT_LENGTH = 80;
     public final int MAX_PREEMPTIONS = 3;
     private char[] gantt;
