@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Priority{
     /* GLOBAL VARIABLES */
-    public final int MAX_PREEMPTIONS = 3;
+    private final int MAX_PREEMPTIONS = 3;
 
     private Deque<process> H;
     private Deque<process> L2;
@@ -36,9 +36,9 @@ public class Priority{
         if(p != null){
             if(p.priority.equals("HP")){
                 H.addLast(p);
-            } else if(p.numOfPreemptions <= MAX_PREEMPTIONS){
+            } else if(p.numOfPreemptions < MAX_PREEMPTIONS){
                 L2.addLast(p);
-            } else if (p.numOfPreemptions > MAX_PREEMPTIONS) {
+            } else if (p.numOfPreemptions >= MAX_PREEMPTIONS) {
                 L3.addLast(p);
             }
         }

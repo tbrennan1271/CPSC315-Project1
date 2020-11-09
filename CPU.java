@@ -9,7 +9,7 @@
 public class CPU{
     //private final int BURST_LEN = 10;
     private final int GANTT_LENGTH = 80;
-    public final int MAX_PREEMPTIONS = 3;
+    private final int MAX_PREEMPTIONS = 3;
     private char[] gantt;
     public process running;
     private int endTime;
@@ -70,6 +70,7 @@ public class CPU{
             startTime = -1;
             tempProc = running;
             tempProc.index++;
+            tempProc.numOfPreemptions = 0;
             blockedProc.addToBlocked(running, tempProc.index);
             running = null;
         }
@@ -88,9 +89,9 @@ public class CPU{
         process tempProc = null;
         int quantum = 0;
         if(running != null){
-            if(running.priority.equals("LP") && running.numOfPreemptions <= MAX_PREEMPTIONS){
+            if(running.priority.equals("LP") && running.numOfPreemptions < MAX_PREEMPTIONS){
                 quantum = l2Quant;
-            } else if(running.priority.equals("LP") && running.numOfPreemptions > MAX_PREEMPTIONS){
+            } else if(running.priority.equals("LP") && running.numOfPreemptions >= MAX_PREEMPTIONS){
                 quantum = l3Quant;
             }
             if(quantum + startTime == clock && quantum != 0){

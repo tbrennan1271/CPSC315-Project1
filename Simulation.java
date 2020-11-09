@@ -1,5 +1,5 @@
 /*
-* main.java
+* Simulation.java
 * Maintains and runs all the necessary code
 *
 * @author Gabby Rogers
