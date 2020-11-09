@@ -46,7 +46,6 @@ public class readInput{
 
             l2Quant = reader.nextInt();
             l3Quant = reader.nextInt();
-            //readyQueues = new priority(l2Quant, l3Quant);  // Set quantums for each low priority queue
             cpu = new CPU(l2Quant, l3Quant);    // Set quantums for each low priority queue
             while(reader.hasNext()){
                 if (count > 2){                 // Records the burst length/blocked time and checks if the process has ended
@@ -67,7 +66,6 @@ public class readInput{
                     id = reader.next().charAt(0);
                 count ++;
             }
-            //return readyQueues;
             return cpu;
         }
         catch(Exception e){

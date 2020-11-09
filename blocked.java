@@ -8,7 +8,7 @@ import java.util.*;
 */
 
 public class blocked {
-    private Map<Integer, process> blocked;      // blocked processes and their blocked time                       
+    private Map<Integer, process> blocked;      // blocked processes and their blocked time
 
     priority tempPriority = new priority();
 
@@ -17,28 +17,33 @@ public class blocked {
     }
 
     /**
-     * 
+     * blocked
+     * Initializes the global variables to be used
+     *
      * @param p - process being blocked
      * @param blockedTime - amt of time process is blocked
      * @return
      */
     public process addToBlocked(process p, int blockedTime){
         process tempProc = null;
-        blocked.put(blockedTime, p);
+        blocked.put(blockedTime + p.burst[p.index], p);
         return tempProc;
     }
 
     /**
-     * 
+     * blockedJobReturnCheck
+     * Checks to see if a processes blocked end time lines up with the current clock
+     *
      * @param clock
      */
-    public void blockedJobReturnCheck(int clock){
-        process p = blocked.get(clock);
-        if(clock == p.burst[p.index] + p.arrival){
-            p.numOfPreemptions++;
-            tempPriority.readyProcess(blocked.remove(clock));
+    public process blockedJobReturnCheck(int clock){
+        process p = null;
+        if(blocked.contsinsKey(clock)){
+            p.index++;
+            p = blocked.get(clock);
+            //tempPriority.readyProcess(blocked.remove(clock));
         }
-    
+        return p;
     }
 
 }

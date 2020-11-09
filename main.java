@@ -54,25 +54,33 @@ public class main{
         //System.out.println(readyQueues);
         int index;
         process current;
+
+        // advance the time
         for(clock = 0; clock < CLOCK_MAX; clock++){
             current = null;
             System.out.println(clock);
+
+            // check if new jobs are entering the system
             index = input.checkNewJobs(clock, processInput);
             if(index >= 0){
-                //System.out.println(processInput.get(index));
                 readyQueues.readyProcess(processInput.get(index));
-                //System.out.println(readyQueues);
             }
+
+            // check if job on is returning from being blocked
+
+            // check if current running job terminates/blocks
             current = cpu.cpuJobDoneCheck(clock);
             if(current != null && current.burst[current.index] != 0){
                 readyQueues.readyProcess(current);
             }
 
+            // check if current running job’s quantum expired
             current = cpu.quantumCheck(clock);
             if(current != null){
                 readyQueues.readyProcess(current);
             }
 
+            // check if CPU idle and if so pick job to run
             if(cpu.isIdle()){
                 current = readyQueues.pickProcess();
                 if(current != null){

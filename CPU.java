@@ -23,6 +23,9 @@ public class CPU{
     /*
     * CPU
     * Initializes the CPU class
+    *
+    * @param int l2Quant: The quantum of the higher low priority queue
+    * @param int l3Quant: The quantum of the lowest priority queue
     */
     public CPU(int l2Quant, int l3Quant){
         gantt = new char[GANTT_LENGTH];
@@ -65,7 +68,7 @@ public class CPU{
             tempProc = running;
             tempProc.index++;
             blockedProc.addToBlocked(running, tempProc.index);
-            running = null;           
+            running = null;
         }
         return tempProc;
     }
@@ -115,13 +118,20 @@ public class CPU{
     }
 
     /**
-     * 
+     * appendGantt
+     * Appends to the character array of process ID's for the gantt chart
+     *
      * @param startTime - when process starts on CPU
      * @param endTime - when process gets off
      */
     private void appendGantt(int startTime, int endTime){
-        for (int j = startTime; j <= endTime; j++){
-            gantt[j] = running.id;
+        for (int j = startTime; j <= endTime + (endTime / 5); j++){
+            if(j % 5 == 0)
+                gantt[j] = '|';
+            else if(running != null)
+                gantt[j] = running.id;
+            else
+                gantt[j] = '*';
         }
     }
 }
