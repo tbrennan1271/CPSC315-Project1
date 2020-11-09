@@ -41,10 +41,12 @@ public class CPU{
     * @param process p: The process to be run
     * @param int clock: Current clock time in order to calculate the proper end time
     */
-    public void runProcess(process p, int clock){
+    public process runProcess(process p, int clock){
         running = p;
         endTime = p.burst[p.index] + clock;
         startTime = clock;
+        appendGantt(startTime, endTime);
+        return running;
     }
 
     /*
@@ -112,7 +114,14 @@ public class CPU{
             return false;
     }
 
+    /**
+     * 
+     * @param startTime - when process starts on CPU
+     * @param endTime - when process gets off
+     */
     private void appendGantt(int startTime, int endTime){
-        
+        for (int j = startTime; j <= endTime; j++){
+            gantt[j] = running.id;
+        }
     }
 }
