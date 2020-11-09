@@ -62,21 +62,6 @@ public class priority{
     }
 
     /*
-    * unblocked
-    * Checks if a job is ready to be placed back on a priority queue
-    *
-    * @param int clock: Overall clock time of the system to check if job should be unblocked
-    */
-    /*
-    public void unblocked(int clock){
-        process p = blocked.get(clock);
-        if(clock == p.burst[p.index] + p.arrival){
-            p.numOfPreemptions++;
-            readyProcess(blocked.remove(clock));
-        }
-    }*/
-
-    /*
     * toString
     * Prints the contents of each priority queue
     *
