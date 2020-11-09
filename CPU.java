@@ -18,6 +18,8 @@ public class CPU{
     public int l2Quant;
     public int l3Quant;
 
+    blocked blockedProc = new blocked();
+
     /*
     * CPU
     * Initializes the CPU class
@@ -60,7 +62,8 @@ public class CPU{
             startTime = -1;
             tempProc = running;
             tempProc.index++;
-            running = null;
+            blockedProc.addToBlocked(running, tempProc.index);
+            running = null;           
         }
         return tempProc;
     }
@@ -110,6 +113,6 @@ public class CPU{
     }
 
     private void appendGantt(int startTime, int endTime){
-
+        
     }
 }
