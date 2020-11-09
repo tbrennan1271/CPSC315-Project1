@@ -88,11 +88,12 @@ public class Simulation{
             readyQueues.readyProcess(current);
 
             // check if CPU idle and if so pick job to run
-            if(cpu.isIdle()){
+            if(cpu.isIdle(clock)){
                 current = readyQueues.pickProcess();
                 System.out.println("IDLE");
                 cpu.runProcess(current, clock);
             }
+            cpu.gantt(clock);
             System.out.println(cpu.running);
             System.out.println();
         }

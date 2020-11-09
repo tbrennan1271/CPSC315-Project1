@@ -28,13 +28,16 @@ public class CPU{
     * @param int l3Quant: The quantum of the lowest priority queue
     */
     public CPU(int l2Quant, int l3Quant){
-        gantt = new char[GANTT_LENGTH];
+        gantt = new char[GANTT_LENGTH + (GANTT_LENGTH / 5)];    // The (GANTT_LENGTH / 5) creates space for '|' every 5 units
         running = null;
         endTime = -1;
         startTime = -1;
         this.l2Quant = l2Quant;
         this.l3Quant = l3Quant;
-
+        for(int i = 5; i < GANTT_LENGTH + (GANTT_LENGTH / 5); i += 6){
+            System.out.println(i);
+            gantt[i] = '|';
+        }
     }
 
     /*
@@ -49,7 +52,7 @@ public class CPU{
             running = p;
             endTime = p.burst[p.index] + clock;
             startTime = clock;
-            appendGantt(startTime, endTime);
+            //appendGantt(startTime, endTime);
             return running;
         }
         return null;
@@ -114,7 +117,7 @@ public class CPU{
     *
     * @return boolean: True if there is no running process and false if there is
     */
-    public boolean isIdle(){
+    public boolean isIdle(int clock){
         if(running == null)
             return true;
         else
@@ -137,5 +140,21 @@ public class CPU{
             else
                 gantt[j] = '*';
         }
+    }
+    /**
+     * appendGantt
+     * Appends to the character array of process ID's for the gantt chart
+     *
+     * @param startTime - when process starts on CPU
+     * @param endTime - when process gets off
+     */
+    public void gantt(int clock){
+        if(running == null){
+            gantt[clock + (clock / 5)] = '*';
+        } else{
+            gantt[clock + (clock / 5)] = running.id;
+        }
+        System.out.println(clock + (clock / 5));
+        System.out.println(gantt);
     }
 }
