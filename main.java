@@ -16,6 +16,7 @@ public class main{
         ArrayList<process> processInput = new ArrayList<>();
         priority readyQueues = new priority();
         readInput input = new readInput();
+        blocked blockedProc = new blocked();
         CPU cpu = new CPU(0, 0);
         int clock;
 
@@ -67,27 +68,30 @@ public class main{
             }
 
             // check if job on is returning from being blocked
+            current = blockedProc.blockedJobReturnCheck(clock);
+            readyQueues.readyProcess(current);
 
             // check if current running job terminates/blocks
             current = cpu.cpuJobDoneCheck(clock);
-            if(current != null && current.burst[current.index] != 0){
-                readyQueues.readyProcess(current);
+            if(current != null){
+                if(current.burst[current.index] != 0){
+                    System.out.print("Process ");
+                    System.out.print(current.id);
+                    System.out.print(" blocked for ");
+                    System.out.println(current.burst[current.index]);
+                    blockedProc.addToBlocked(current, clock);
+                }
             }
 
             // check if current running job’s quantum expired
             current = cpu.quantumCheck(clock);
-            if(current != null){
-                readyQueues.readyProcess(current);
-            }
+            readyQueues.readyProcess(current);
 
             // check if CPU idle and if so pick job to run
             if(cpu.isIdle()){
                 current = readyQueues.pickProcess();
-                if(current != null){
-                    System.out.println("IDLE");
-
-                    cpu.runProcess(current, clock);
-                }
+                System.out.println("IDLE");
+                cpu.runProcess(current, clock);
             }
             System.out.println(cpu.running);
             System.out.println();

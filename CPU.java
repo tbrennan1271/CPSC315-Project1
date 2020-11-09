@@ -45,11 +45,14 @@ public class CPU{
     * @param int clock: Current clock time in order to calculate the proper end time
     */
     public process runProcess(process p, int clock){
-        running = p;
-        endTime = p.burst[p.index] + clock;
-        startTime = clock;
-        appendGantt(startTime, endTime);
-        return running;
+        if(p != null){
+            running = p;
+            endTime = p.burst[p.index] + clock;
+            startTime = clock;
+            appendGantt(startTime, endTime);
+            return running;
+        }
+        return null;
     }
 
     /*
