@@ -7,7 +7,7 @@
 */
 
 public class CPU{
-    //private final int BURST_LEN = 10;
+    private final int BURST_LEN = 10;
     private final int GANTT_LENGTH = 80;
     private final int MAX_PREEMPTIONS = 3;
     private final int TICK_INTERVAL = 5;
@@ -37,7 +37,7 @@ public class CPU{
 
     /*
     * runProcess
-    * Initializes the global variables and the priority queues to be used
+    * runs picked process on the CPU for its current CPUburst length
     *
     * @param process p: The process to be run
     * @param int clock: Current clock time in order to calculate the proper end time

@@ -31,6 +31,7 @@ public class Priority{
     * Takes processes as input and assigns them to the proper priority queue
     *
     * @param process p: The process to be assigned to a priority queue
+    * @param clock - the current clock time
     */
     public void readyProcess(process p, int clock){
         if(p != null){
