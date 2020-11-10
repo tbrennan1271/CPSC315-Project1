@@ -15,11 +15,12 @@ public class process{
     public int numOfPreemptions;
     public int turnaroundTime;
     public int totalReadyQueueWaitingTime;
+    public int startWait;
 
     /*
     * process
     * Initializes the global variables and the priority queues to be used
-    * 
+    *
     * @param char id: The single character id
     * @param String priority: Either HP or LP
     * @param int arrival: Initial arrival time of the process

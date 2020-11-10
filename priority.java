@@ -32,8 +32,9 @@ public class Priority{
     *
     * @param process p: The process to be assigned to a priority queue
     */
-    public void readyProcess(process p){
+    public void readyProcess(process p, int clock){
         if(p != null){
+            p.startWait = clock;
             if(p.priority.equals("HP")){
                 H.addLast(p);
             } else if(p.numOfPreemptions < MAX_PREEMPTIONS){
@@ -50,15 +51,18 @@ public class Priority{
     *
     * @return process: The process to be run on the CPU or null if there are no processes available
     */
-    public process pickProcess(){
+    public process pickProcess(int clock){
+        process current = null;
         if (H.isEmpty() == false){
-            return H.removeFirst();
+            current = H.removeFirst();
         } else if (L2.isEmpty() == false){
-            return L2.removeFirst();
+            current = L2.removeFirst();
         } else if (L3.isEmpty() == false){
-            return L3.removeFirst();
+            current = L3.removeFirst();
         }
-        return null;
+        if(current != null)
+            current.totalReadyQueueWaitingTime += clock - current.startWait;
+        return current;
     }
 
     /*

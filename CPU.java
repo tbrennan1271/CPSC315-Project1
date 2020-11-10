@@ -32,10 +32,6 @@ public class CPU{
         startTime = -1;
         this.l2Quant = l2Quant;
         this.l3Quant = l3Quant;
-        for(int i = 5; i < GANTT_LENGTH + (GANTT_LENGTH / 5); i += 6){
-            System.out.println(i);
-            gantt[i] = '|';
-        }
     }
 
     /*
@@ -131,12 +127,15 @@ public class CPU{
      */
     public void gantt(int clock){
         int tickInterval = 5;
+        if((clock % tickInterval == 0 && clock != 0){
+            gantt[clock +  (clock / tickInterval) - 1] = '|';
+        }
         if(isIdle()){
             gantt[clock + (clock / tickInterval)] = '*';
         } else{
             gantt[clock + (clock / tickInterval)] = running.id;
         }
-        System.out.println(clock + (clock / tickInterval));
+            //System.out.println(clock + (clock / tickInterval) - 1);
         System.out.println(gantt);
     }
 }

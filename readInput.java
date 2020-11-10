@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.util.*;
 
 public class readInput{
-    private static final int BURST_LEN = 10;
+    private static final int BURST_LEN = 11;
 
     /*
     * readFile
