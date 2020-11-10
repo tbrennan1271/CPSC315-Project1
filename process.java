@@ -13,6 +13,8 @@ public class process{
     public int[] burst;
     public int index;   // Hopefully temp var to maintain burst index
     public int numOfPreemptions;
+    public int turnaroundTime;
+    public int totalReadyQueueWaitingTime;
 
     /*
     * process
