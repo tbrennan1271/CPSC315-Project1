@@ -39,7 +39,7 @@ public class Blocked {
     public process blockedJobReturnCheck(int clock){
         process p = null;
         if(blocked.containsKey(clock)){
-            p = blocked.get(clock);
+            p = blocked.remove(clock);
             p.index++;
             //tempPriority.readyProcess(blocked.remove(clock));
         }

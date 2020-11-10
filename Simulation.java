@@ -21,7 +21,7 @@ public class Simulation{
         readInput input = new readInput();
         Blocked blockedProc = new Blocked();
         CPU cpu = new CPU(0, 0);
-        int clock = 0;
+        int clock = -1;
 
         // first check to see if the program was run with the command line argument
         if(args.length < 1) {
@@ -59,15 +59,16 @@ public class Simulation{
         int index;
         process current;
 
-        // advance the time
-        for(clock = 0; clock < CLOCK_MAX; clock++){
+
+        while(!blockedProc.isEmpty() || !readyQueues.isEmpty() || !cpu.isIdle() || !processInput.isEmpty()){
+            // advance the time
+            clock++;
             current = null;
-            System.out.println(clock);
 
             // check if new jobs are entering the system
             index = input.checkNewJobs(clock, processInput);
             if(index >= 0){
-                readyQueues.readyProcess(processInput.get(index), clock);
+                readyQueues.readyProcess(processInput.remove(index), clock);
             }
 
             // check if job on is returning from being blocked
@@ -84,10 +85,6 @@ public class Simulation{
                     completedProc.add(current);
                     avgTotalWait += current.totalReadyQueueWaitingTime;
                     avgTurnaround += current.turnaroundTime;
-                    System.out.print("READY QUEUE WAIT TIME: ");
-                    System.out.println(current.totalReadyQueueWaitingTime);
-                    System.out.print("TURNAROUND: ");
-                    System.out.println(current.turnaroundTime);
                 }
             }
 
@@ -101,15 +98,29 @@ public class Simulation{
                 cpu.runProcess(current, clock);
             }
             cpu.gantt(clock);
-            System.out.println(cpu.running);
+        }
+        avgTotalWait /= completedProc.size();
+        avgTurnaround /= completedProc.size();
+
+        // Output
+        System.out.print("Average ready queue wait time: ");
+        System.out.println(avgTotalWait);
+        System.out.print("Average turnaround time: ");
+        System.out.println(avgTurnaround);
+
+        for(int i = 0; i < completedProc.size(); i++){
+            System.out.print("\nReady queue wait time for process ");
+            System.out.print(completedProc.get(i).id);
+            System.out.print(": ");
+            System.out.println(completedProc.get(i).totalReadyQueueWaitingTime);
+            System.out.print("Turnaround time for process ");
+            System.out.print(completedProc.get(i).id);
+            System.out.print(": ");
+            System.out.println(completedProc.get(i).turnaroundTime);
             System.out.println();
         }
-    avgTotalWait /= completedProc.size();
-    avgTurnaround /= completedProc.size();
-    System.out.print("AVERAGE READY QUEUE WAIT TIME: ");
-    System.out.println(avgTotalWait);
-    System.out.print("AVERAGE TURNAROUND: ");
-    System.out.println(avgTurnaround);
+
+        System.out.println(cpu);
     }
 // blocked map, arrayList, CPU, priority queues
     public boolean checkProcesses(Blocked b, CPU cpu, Priority priority){

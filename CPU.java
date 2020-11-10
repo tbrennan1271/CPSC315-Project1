@@ -10,6 +10,7 @@ public class CPU{
     //private final int BURST_LEN = 10;
     private final int GANTT_LENGTH = 80;
     private final int MAX_PREEMPTIONS = 3;
+    private final int TICK_INTERVAL = 5;
     private char[] gantt;
     public process running;
     private int endTime;
@@ -46,7 +47,6 @@ public class CPU{
             running = p;
             endTime = p.burst[p.index] + clock;
             startTime = clock;
-            //appendGantt(startTime, endTime);
             return running;
         }
         return null;
@@ -92,9 +92,6 @@ public class CPU{
                 quantum = l3Quant;
             }
             if(quantum + startTime == clock && quantum != 0){
-                System.out.print("----- ");
-                System.out.print(running.id);
-                System.out.println(" USED ENTIRE QUANTUM -----");
                 running.numOfPreemptions++;
                 tempProc = running;
                 tempProc.burst[tempProc.index] -= quantum;
@@ -126,16 +123,25 @@ public class CPU{
      * @param endTime - when process gets off
      */
     public void gantt(int clock){
-        int tickInterval = 5;
-        if((clock % tickInterval == 0 && clock != 0){
-            gantt[clock +  (clock / tickInterval) - 1] = '|';
+        if(clock % TICK_INTERVAL == 0 && clock != 0){
+            gantt[clock +  (clock / TICK_INTERVAL) - 1] = '|';
         }
         if(isIdle()){
-            gantt[clock + (clock / tickInterval)] = '*';
+            gantt[clock + (clock / TICK_INTERVAL)] = '*';
         } else{
-            gantt[clock + (clock / tickInterval)] = running.id;
+            gantt[clock + (clock / TICK_INTERVAL)] = running.id;
         }
-            //System.out.println(clock + (clock / tickInterval) - 1);
-        System.out.println(gantt);
+    }
+
+    public String toString(){
+        String res = "";
+        String temp = new String(gantt);
+        gantt[gantt.length - 1] = ' ';
+        res += temp.subSequence(0, (GANTT_LENGTH / 2) + ((GANTT_LENGTH / 2) / TICK_INTERVAL));
+        if(gantt.length > (GANTT_LENGTH / 2) + ((GANTT_LENGTH / 2) / TICK_INTERVAL)){
+            res += "\n";
+            res += temp.subSequence((GANTT_LENGTH / 2) + ((GANTT_LENGTH / 2) / TICK_INTERVAL), gantt.length);
+        }
+        return res;
     }
 }
