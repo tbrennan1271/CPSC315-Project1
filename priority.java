@@ -120,4 +120,11 @@ public class Priority{
         }
         return res;
     }
+
+    public boolean isEmpty(){
+        if (H.isEmpty() && L2.isEmpty() && L3.isEmpty()){
+            return true;
+        }
+        return false;
+    }
 }

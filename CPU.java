@@ -14,10 +14,8 @@ public class CPU{
     public process running;
     private int endTime;
     private int startTime;
-
     public int l2Quant;
     public int l3Quant;
-
     Blocked blockedProc = new Blocked();
 
     /*
@@ -117,7 +115,7 @@ public class CPU{
     *
     * @return boolean: True if there is no running process and false if there is
     */
-    public boolean isIdle(int clock){
+    public boolean isIdle(){
         if(running == null)
             return true;
         else
@@ -125,36 +123,20 @@ public class CPU{
     }
 
     /**
-     * appendGantt
-     * Appends to the character array of process ID's for the gantt chart
-     *
-     * @param startTime - when process starts on CPU
-     * @param endTime - when process gets off
-     */
-    private void appendGantt(int startTime, int endTime){
-        for (int j = startTime; j <= endTime + (endTime / 5); j++){
-            if(j % 5 == 0)
-                gantt[j] = '|';
-            else if(running != null)
-                gantt[j] = running.id;
-            else
-                gantt[j] = '*';
-        }
-    }
-    /**
-     * appendGantt
+     * gantt
      * Appends to the character array of process ID's for the gantt chart
      *
      * @param startTime - when process starts on CPU
      * @param endTime - when process gets off
      */
     public void gantt(int clock){
-        if(running == null){
-            gantt[clock + (clock / 5)] = '*';
+        int tickInterval = 5;
+        if(isIdle()){
+            gantt[clock + (clock / tickInterval)] = '*';
         } else{
-            gantt[clock + (clock / 5)] = running.id;
+            gantt[clock + (clock / tickInterval)] = running.id;
         }
-        System.out.println(clock + (clock / 5));
+        System.out.println(clock + (clock / tickInterval));
         System.out.println(gantt);
     }
 }

@@ -88,7 +88,7 @@ public class Simulation{
             readyQueues.readyProcess(current);
 
             // check if CPU idle and if so pick job to run
-            if(cpu.isIdle(clock)){
+            if(cpu.isIdle()){
                 current = readyQueues.pickProcess();
                 System.out.println("IDLE");
                 cpu.runProcess(current, clock);
@@ -97,5 +97,12 @@ public class Simulation{
             System.out.println(cpu.running);
             System.out.println();
         }
+    }
+// blocked map, arrayList, CPU, priority queues
+    public boolean checkProcesses(Blocked b, CPU cpu, Priority priority){
+        if (b.isEmpty() && cpu.isIdle() && priority.isEmpty()){
+            return true;
+        }
+        return false;
     }
 }

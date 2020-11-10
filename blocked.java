@@ -46,4 +46,11 @@ public class Blocked {
         return p;
     }
 
+    public boolean isEmpty(){
+        if (blocked.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
 }
