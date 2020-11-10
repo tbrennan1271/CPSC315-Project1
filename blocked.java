@@ -24,10 +24,8 @@ public class Blocked {
      * @param blockedTime - amt of time process is blocked
      * @return
      */
-    public process addToBlocked(process p, int blockedTime){
-        process tempProc = null;
+    public void addToBlocked(process p, int blockedTime){
         blocked.put(blockedTime + p.burst[p.index], p);
-        return tempProc;
     }
 
     /**

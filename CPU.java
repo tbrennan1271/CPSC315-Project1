@@ -11,7 +11,7 @@ public class CPU{
     private final int GANTT_LENGTH = 80;
     private final int MAX_PREEMPTIONS = 3;
     private final int TICK_INTERVAL = 5;
-    private char[] gantt;
+    public char[] gantt;
     public process running;
     private int endTime;
     private int startTime;
@@ -136,7 +136,6 @@ public class CPU{
     public String toString(){
         String res = "";
         String temp = new String(gantt);
-        gantt[gantt.length - 1] = ' ';
         res += temp.subSequence(0, (GANTT_LENGTH / 2) + ((GANTT_LENGTH / 2) / TICK_INTERVAL));
         if(gantt.length > (GANTT_LENGTH / 2) + ((GANTT_LENGTH / 2) / TICK_INTERVAL)){
             res += "\n";

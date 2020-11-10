@@ -33,19 +33,6 @@ public class Simulation{
 
 
         /*
-        for(int i = 0; i < processInput.size(); i++){
-            System.out.println(processInput.get(i));
-        }*/
-
-
-        /*
-        for(int i = 0; i < processInput.size(); i++){
-            readyQueues.readyProcess(processInput.get(i));
-        }*/
-
-
-
-        /*
         Loop
             clock = clock + 1;		// advance the time
             Check_new_jobs;		    // check if new jobs are entering the system
@@ -97,7 +84,8 @@ public class Simulation{
                 current = readyQueues.pickProcess(clock);
                 cpu.runProcess(current, clock);
             }
-            cpu.gantt(clock);
+            if(!blockedProc.isEmpty() || !readyQueues.isEmpty() || !cpu.isIdle() || !processInput.isEmpty())
+                cpu.gantt(clock);
         }
         avgTotalWait /= completedProc.size();
         avgTurnaround /= completedProc.size();
