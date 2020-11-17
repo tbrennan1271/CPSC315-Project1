@@ -17,8 +17,6 @@ public class CPU{
     private int startTime;
     public int l2Quant;
     public int l3Quant;
-    public int totalTime;
-    public int utilization;
     Blocked blockedProc = new Blocked();
 
     /*
@@ -35,8 +33,6 @@ public class CPU{
         startTime = -1;
         this.l2Quant = l2Quant;
         this.l3Quant = l3Quant;
-        totalTime = 0;
-        utilization = 0;
     }
 
     /*
@@ -134,9 +130,7 @@ public class CPU{
             gantt[clock + (clock / TICK_INTERVAL)] = '*';
         } else{
             gantt[clock + (clock / TICK_INTERVAL)] = running.id;
-            utilization++;
         }
-        totalTime++;
     }
 
     public String toString(){
