@@ -39,6 +39,7 @@ public class Blocked {
         if(blocked.containsKey(clock)){
             p = blocked.remove(clock);
             p.index++;
+            //tempPriority.readyProcess(blocked.remove(clock));
         }
         return p;
     }

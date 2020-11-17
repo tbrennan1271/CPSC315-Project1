@@ -80,20 +80,14 @@ public class readInput{
     *
     * @param int currentClockTick: Current clock time to be compared to the arrival times in the ArrayList
     * @param ArrayList<process> processInput: ArrayList that stores all the incoming processes
-    * @return List<process>: Processes that are entering the system at the specified time or empty if there is none
+    * @return int: Index of the proces that is entering the system at the specified time or -1 of ther is none
     */
-    public List<process> checkNewJobs(int currentClockTick, ArrayList<process> processInput){
-        List<process> res = new LinkedList<process>();
-        int n = processInput.size();
-        for (int i = 0; i < n; i++){
+    public int checkNewJobs(int currentClockTick, ArrayList<process> processInput){
+        for (int i = 0; i < processInput.size(); i++){
             if (processInput.get(i).arrival == currentClockTick){
-                res.add(processInput.get(i));
+                return i;
             }
         }
-        n = res.size();
-        for(int i = 0; i < n; i++){
-            processInput.remove(res.get(i));
-        }
-        return res;
+        return -1;
     }
 }
